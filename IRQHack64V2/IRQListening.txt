@@ -1,14 +1,20 @@
 Fundamentals of Communication from C64 to IRQHack64
 
+-- Initial design idea for the C64->Cart communication was as follows... but the implementation has been changed completely...
 1. IRQ line is used to send data from C64 to IRQHack64
 2. To keep things simple initially screen is assumed to be off to prevent bad lines and loss of sync.
 3. Speed will be second priority.
 4. Cartridge will be waiting a startup IRQ sequence to listen to actual commands and data. Hence any program that make use of interrupts will not interfere with the command&data structure of the cartridge.
 5. Currently the solution is to manipulate the length of L / H / L transitions of IRQ line. CIA timer A interrupts used with interrupt handling in the cpu disabled.
 
-
-Possible improvements
-1. Force cartridge to listen to NMI (normally an output from cartridge) and use it along with IRQ to increase bandwidth.
-2. Add ability of receiving data while screen is enabled.
-3. Maximize throughput.
+-- V2 firmware uses below protocol to establish communication from C64 to Cart
+1. On the expansion port IRQ line is no longer connected to Arduino digital pin 2.  (One need to cut and redirect the trace on the original hardware)
+2. Instead of IRQ line IO2 line is connected to Arduino digital pin 2. 
+    Advantages are
+        - IO2 line can be directly triggered by the C64 unlike IRQ line
+        - Cartridge doesn't need to be interfering with the IRQ interrupts
+3. Communication is handled by the Cart at all times. 3 bytes initialization message should be sent by C64 to activate Cart for further commands.
+ Initalization bytes are as follows : 0x64, 0x46, 0x17 (See IRQ_StartTalking in Loader\CartLib.s)
+4. A Zero is sent to the Cart by accessing IO2 memory twice by ~400us apart. A one is sent to the Cart by accessing IO2 memory twice by ~800us apart. 
+Code in Loader\CartLibHi.s already contains routines that have high level interface code that abstracts this communication mechanism.
 
