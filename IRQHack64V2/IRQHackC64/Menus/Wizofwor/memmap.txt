@@ -1,0 +1,13 @@
+Memory Map
+
+Start 	$0900
+
+MUSIC 	   = $1000 - $2112
+SPRITE 	   = $2140 - $2740
+CHARSET    = $2800 - $2C00
+
+==Listing Data==
+CURPAGEITEMS	= $2CF0
+PAGECOUNT		= $2CF1
+CURPAGEINDEX	= $2CF2
+ITEMLIST		= $2D00

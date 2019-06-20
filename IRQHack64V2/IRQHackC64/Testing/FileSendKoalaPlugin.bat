@@ -1,0 +1,1 @@
+..\..\Tools\IRQHackSendNew W ..\build\plugins\koaplugin.bin COM10

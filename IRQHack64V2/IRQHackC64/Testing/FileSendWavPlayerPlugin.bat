@@ -1,0 +1,1 @@
+..\..\Tools\IRQHackSendNew W ..\build\plugins\wavplugin.bin COM10

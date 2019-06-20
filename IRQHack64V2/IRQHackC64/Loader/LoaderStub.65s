@@ -1,0 +1,137 @@
+; Stub to execute loaded program
+;------------------------------------------------------------------------------------
+; Upon sending the program arduino needs to disable cartridge
+; But this should be syncronized to the cartridge actually leaving
+; control to the loaded program. 
+; Early disabling means cartridge didn't yet finish with leaving control to the loaded program
+; Late disabling means loaded program can access garbage between $8000-$9FFF
+; Solution : Running the launcher part of the cartridge from cassette buffer instead of rom. Arduino 
+; can disable the cartridge as soon as it finishes sending the data. With just a little bit delay to give cartridge the chance
+; to continue running code in the cassette buffer actually.
+TYPE_MENU			= 0
+TYPE_STANDARD_PRG 	= 1
+TYPE_CARTRIDGE		= 2
+TYPE_BOOTER			= 3
+
+
+DATA_LOW		= $69
+DATA_HIGH		= $6A
+DATA_LENGTH		= $6B
+ACTUAL_LOW		= $6C
+ACTUAL_HIGH		= $6D
+ACTUAL_END_LOW	= $6E
+ACTUAL_END_HIGH	= $6F
+TYPE			= $70
+RESERVED2		= $71
+RESERVED3		= $72
+
+IRQ_LO			= $0314
+IRQ_HI			= $0315
+
+NMI_LO			= $0318
+NMI_HI			= $0319
+
+LOAD_START_LO	= $AE
+LOAD_START_HI	= $AF
+
+DEFAULT_NMI_HANDLER = $FE47
+DEFAULT_IRQ_HANDLER = $EA31
+
+
+BORDER			= $D020
+
+
+
+
+	*=$033C
+
+; İlker Fıçıcılar's fix to basic programs overwriting themselves start of memory for constants & variables.
+; Added another fix for programs that looks up end load address at $AE/$AF
+	LDY ACTUAL_END_LOW
+	STY $2D
+	STY $2F
+	STY LOAD_START_LO
+	LDA ACTUAL_END_HIGH
+	STA $2E
+	STA $30
+	STA LOAD_START_HI
+		
+; Restore nmi vector
+	LDA #<DEFAULT_NMI_HANDLER
+	STA NMI_LO
+	LDA #>DEFAULT_NMI_HANDLER
+	STA NMI_HI	
+	
+	LDA #<DEFAULT_IRQ_HANDLER
+	STA IRQ_LO
+	LDA #>DEFAULT_IRQ_HANDLER
+	STA IRQ_HI	
+	
+;	Execute loaded program	
+	LDA #$37					;Restore default memory layout
+	STA $01	
+	
+	LDA #$1B					;%00011011 ; Enable VIC again
+	STA $D011
+	
+	LDA #$08					;Initialize current device number as 8
+	STA $BA
+	
+	LDA TYPE
+	CMP #TYPE_BOOTER
+	BEQ LAUNCH
+	LDA #$81					;%10000001 ; Enable CIA interrupts
+	STA $DC0D	
+		
+LAUNCH	
+	LDA #$08					;Unoptimized (Forgetting an optimization causes bugs sometimes :)
+	CMP DATA_HIGH				
+	BNE MACHINELANG				
+	LDA DATA_LOW
+	CMP #$01
+	BNE MACHINELANG
+	
+	LDA #00					
+	STA BORDER
+	
+	JSR $A659 ;"CLR" 	
+	JMP $A7AE ;"RUN" 
+ 	
+MACHINELANG 
+	LDA DATA_HIGH
+	CMP #$80
+	BEQ CARTRIDGE	
+	LDA #00					
+	STA BORDER	
+	JMP (DATA_LOW)				; Leave control to loaded stuff 
+
+CARTRIDGE	
+;	LDA #$00
+;	STA $FB
+;	LDA #$E0
+;	STA $FC
+;	LDY #$00
+;-	
+;	LDA ($FB),Y
+;	STA ($FB),Y
+;	INY
+;	BNE -
+;	INC $FC
+;	BNE -
+	
+;	LDA #$34
+
+	LDY #$80       
+	STX $0283					; highest ram address for Basic       
+	STY $0284  
+	STX $c1      
+	STY $c2 	
+	
+	LDA #$36					; $A000-$BFFF range is read from RAM
+	STA $01
+	LDA #00					
+	STA BORDER
+	;JMP ($8000)
+	JMP $FCE2
+
+	

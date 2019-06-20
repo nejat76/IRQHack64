@@ -1,0 +1,1 @@
+..\..\Tools\IRQHackSendNew W ..\build\plugins\sidplay64.prg COM10

@@ -1,0 +1,8 @@
+ByteQueue	KEYWORD1
+Reset	KEYWORD2
+Enqueue	KEYWORD2
+Dequeue	KEYWORD2
+Size	KEYWORD2
+IsEmpty	KEYWORD2
+IsAvailable	KEYWORD2
+IsFull	KEYWORD2

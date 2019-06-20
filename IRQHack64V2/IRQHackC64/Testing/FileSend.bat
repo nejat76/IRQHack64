@@ -1,0 +1,1 @@
+..\..\Tools\IRQHackSendNew W ..\build\irqhack64.prg COM10

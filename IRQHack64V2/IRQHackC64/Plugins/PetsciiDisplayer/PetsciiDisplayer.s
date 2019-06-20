@@ -1,0 +1,385 @@
+; PETSCII displayer plugin for IRQHack64V2
+; 05/08/2018 - Istanbul
+; I.R.on
+
+.enc screen
+
+;Kernal routines
+CHROUT    	= $FFD2
+GETIN 	  	= $FFE4
+SCNKEY 		=  $FF9F 
+RESETROUTINE = $FCE2
+SOFTNMIVECTOR	= $0318
+IRQVECTOR	= $0314
+IRQ6502			= $FFFE
+;VIC Border color
+BORDER		= $D020
+SIDLOAD		= $E000
+
+FILENAME = $033C
+
+DEBUG = 0
+
+PRINTSTATUSANDWAIT	.macro
+.if DEBUG = 1
+	PRINTSTATUS \1
+	DELAYFRAMES \2	
+.else
+	DELAYFRAMES 1
+.endif	
+	.endm
+	
+
+DELAYFRAMES	.macro
+.if DEBUG = 1
+	LDX #\1
+	JSR WAITFRAMES
+.endif	
+	.endm
+		
+PRINTSTATUS	.macro
+	LDA #$20
+	LDX #40
+-	
+	STA $0400, X
+	DEX
+	BNE -
+NEXTCHAR	
+	LDA \1, X
+	BEQ OUTPRINT
+	CMP #$3F
+	BMI NOTSPACE
+	CLC
+	SBC #$3f
+NOTSPACE	
+	STA $0400, X
+	INX
+	BNE NEXTCHAR
+OUTPRINT
+	.endm
+	
+	*=$C000
+	JMP MAIN
+	
+MAIN	
+	JSR INIT		;Clears screen, disables interrupts.	
+;	JSR DISPLAYPICTURE	
+;-	
+;	JMP -
+
+	DELAYFRAMES 100
+	PRINTSTATUSANDWAIT INITTEXT, 100	
+	DELAYFRAMES 250
+	
+ALTENTRY	
+
+;Lets try to open a file
+	PRINTSTATUSANDWAIT OPENINGFILE, 100
+	JSR IRQ_DisableDisplay		
+	LDX #<FILENAME	
+	LDY #>FILENAME
+	LDA #31
+	JSR IRQ_SetName
+	LDX #01		; Flags=read
+	JSR IRQ_OpenFile
+	BCC OPENINGCONT
+	JMP ERROR_OPENING_FILE
+OPENINGCONT	
+	JSR IRQ_EnableDisplay
+	
+	PRINTSTATUSANDWAIT OPENINGSUCCESS, 200
+	;JMP FILEREAD
+	PRINTSTATUSANDWAIT READINGFILE, 200
+
+	LDA #<READBUFFER
+	STA IRQ_DATA_LOW
+	LDA #>READBUFFER
+	STA IRQ_DATA_HIGH
+	LDA #$08
+	STA IRQ_DATA_LENGTH
+	
+	LDA #<FILEREAD
+	STA IRQ_CALLBACK_LO
+	LDA #>FILEREAD
+	STA IRQ_CALLBACK_HI
+	
+	JSR IRQ_DisableDisplay
+	LDY #$00
+	JSR IRQ_ReadFile
+	BCS ERRORREADING
+	
+ERRORREADING	
+	JSR IRQ_EnableDisplay
+	PRINTSTATUSANDWAIT READINGFAILED, 200		
+	JMP EXITFAIL
+	
+ERROR_OPENING_FILE	
+	JSR IRQ_EnableDisplay
+	PRINTSTATUSANDWAIT OPENINGFILEFAILED, 200		
+	JMP EXITFAIL	
+	
+FILEREAD
+	NOP
+	JSR IRQ_EnableDisplay
+
+	
+	JSR DISPLAYPICTURE
+	
+	PRINTSTATUSANDWAIT CLOSINGFILE, 250	
+	PRINTSTATUSANDWAIT CLOSINGFILE, 250	
+	JSR IRQ_CloseFile
+	BCS ERRORCLOSING
+	
+	PRINTSTATUSANDWAIT FILECLOSED, 200	
+	JMP INPUT_GET
+ERRORCLOSING
+	STA $0628
+	JSR IRQ_EnableDisplay
+	PRINTSTATUSANDWAIT ERRORCLOSINGFILE, 100		
+	JMP EXITFAIL
+INPUT_GET
+	JSR SCNKEY		; Call kernal's key scan routine
+ 	JSR GETIN		; Get the pressed key by the kernal routine
+  	BEQ INPUT_GET		; If zero then no key is pressed so repeat
+	
+EXITFAIL	
+	JSR IRQ_DisableDisplay
+	JSR IRQ_ExitToMenu
+
+	JMP *
+	
+
+	
+DISPLAYPICTURE
+	LDA READBUFFER
+	STA $D020
+	LDA READBUFFER+1
+	STA $D021
+
+	LDA #<READBUFFER+2
+	STA $FB
+	LDA #>READBUFFER+2
+	STA $FC
+
+	LDA #00
+	STA $FD
+	LDA #04
+	STA $FE
+	
+	LDX #$04
+	LDY #$00
+-	
+	LDA ($FB), Y
+	STA ($FD),Y
+	INY
+	BNE -
+	INC $FC	
+	INC $FE
+	DEX	
+	BNE -
+	
+	
+	LDA #<(READBUFFER+1002)
+	STA $FB
+	LDA #>(READBUFFER+1002)
+	STA $FC
+
+	LDA #00
+	STA $FD
+	LDA #$D8
+	STA $FE
+	
+	LDX #$04
+	LDY #$00
+-	
+	LDA ($FB), Y
+	STA ($FD),Y
+	INY
+	BNE -
+	INC $FC	
+	INC $FE
+	DEX	
+	BNE -	
+	RTS
+	
+INIT		; Input : None, Changed : A
+	CLD
+	LDA #$93
+	JSR CHROUT
+	LDA #$00 
+	STA $D020
+	LDA #$0B
+	STA $D021
+	JSR INITPC
+		
+	JSR DISABLEINTERRUPTS		
+	JSR KILLCIA
+		
+	RTS
+
+INITPC
+	LDX #$00
+	LDA #$0F
+CBL
+	STA $D800,X
+	STA $D900,X
+	STA $DA00,X
+	STA $DB00,X	
+	INX
+	BNE CBL
+	RTS
+	
+KILLCIA
+	;LDA #$00
+	;STA ISMUSICPLAYING
+	LDY #$7f    ; $7f = %01111111 
+    STY $dc0d   ; Turn off CIAs Timer interrupts 
+    STY $dd0d   ; Turn off CIAs Timer interrupts 
+    LDA $dc0d   ; cancel all CIA-IRQs in queue/unprocessed 
+    LDA $dd0d   ; cancel all CIA-IRQs in queue/unprocessed 
+	RTS	
+
+DISABLEINTERRUPTS
+    LDY #$7f    				; $7f = %01111111 
+    STY $dc0d   				; Turn off CIAs Timer interrupts 
+    STY $dd0d  				; Turn off CIAs Timer interrupts 
+    LDA $dc0d  				; cancel all CIA-IRQs in queue/unprocessed 
+    LDA $dd0d   				; cancel all CIA-IRQs in queue/unprocessed 
+	
+					
+; 	Change interrupt routines
+	ASL $D019
+	LDA #$00
+	STA $D01A
+	RTS
+
+DISABLEDISPLAY
+	LDA #$0B				;%00001011 ; Disable VIC display until the end of transfer
+	STA $D011	
+	RTS
+	
+ENABLEDISPLAY
+	LDA #$3B				
+	STA $D011	
+	RTS	
+
+WAITFRAMES
+FD
+	LDY #$90
+-	
+	CPY $D012
+	BNE -
+	LDY #50
+-	
+	DEY
+	BNE - 
+	
+	DEX
+	BNE FD
+	RTS
+	
+	
+;GetFileNameParameter:	
+;	LDA $01
+;	PHA
+;	LDA #$35
+;	STA $01
+;
+;	LDY #0
+;-	
+;	LDA FILENAMESHADOW, Y
+;	STA CASSETTEBUFFER, Y
+;
+;	INY
+;	CPY #MAXFILENAMELENGTH
+;	BNE -
+;	
+;	LDA CURRENTDIRINDEXSHADOW
+;	STA CURRENTDIRINDEX  
+;	
+;; Copy dirstack
+;	LDY #0
+;-	
+;	LDA DIRSTACKTEMP, Y
+;	STA DIRSTACK, Y
+;	LDA DIRSTACKTEMP+$100, Y
+;	STA DIRSTACK+$100, Y
+;	LDA DIRSTACKTEMP+$200, Y
+;	STA DIRSTACK+$200, Y
+;	INY
+;	BNE - 	
+;	
+;	PLA
+;	STA $01
+;	
+;	RTS		
+	
+	
+INITTEXT
+	.TEXT "IRQHACK64V2 PETSCII PLUGIN"
+	.BYTE 0	
+	
+SENDSTARTTALKING
+	.TEXT "SENDING START TALKING COMMAND"
+	.BYTE 0		
+
+STARTEDTALKING
+	.TEXT "STARTED TALKING"
+	.BYTE 0		
+
+OPENINGFILE
+	.TEXT "OPENING FILE"
+	.BYTE 0		
+
+OPENINGFILEFAILED
+	.TEXT "OPENING FILE FAILED"
+	.BYTE 0	
+
+OPENINGSUCCESS
+	.TEXT "FILE OPEN SUCCEEDED"
+	.BYTE 0		
+	
+READINGFILE
+	.TEXT "READING FILE"
+	.BYTE 0		
+
+
+READINGFAILED	
+	.TEXT "READING FAILED"
+	.BYTE 0		
+CLOSINGFILE	
+	.TEXT "CLOSING FILE"
+	.BYTE 0	
+	
+FILECLOSED
+	.TEXT "FILE CLOSING SUCCEEDED"
+	.BYTE 0
+	
+	
+ERRORCLOSINGFILE
+	.TEXT "CLOSING FAILED"
+	.BYTE 0	
+
+
+.include "..\..\Loader\CartLib.s"
+.include "..\..\Loader\CartLibHi.s"
+
+;DIRECTORIESMAXDEPTH	= 10	
+;MAXFILENAMELENGTH = 32
+
+;-       = DIRSTACK + range(0, MAXFILENAMELENGTH * DIRECTORIESMAXDEPTH, MAXFILENAMELENGTH)
+;DIRNAMESLO   .byte <(-)
+;DIRNAMESHI   .byte >(-)
+
+
+;PARENTDIR
+;	.TEXT ".."
+;	.FILL 30,0
+
+; Library on the arduino doesn't support opening parent directories, so we need to go to root and then 
+; traverse the path to the current path's parent.
+;DIRSTACK
+;	.FILL 32 * DIRECTORIESMAXDEPTH
+
+READBUFFER
+ ;	.binary "unclenash.petg"

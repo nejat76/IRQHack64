@@ -1,0 +1,262 @@
+DATA_LOW		= $69
+DATA_HIGH		= $6A
+DATA_LENGTH		= $6B
+ACTUAL_LOW		= $6C
+ACTUAL_HIGH		= $6D
+ACTUAL_END_LOW	= $6E
+ACTUAL_END_HIGH	= $6F
+TYPE			= $70
+TRANSFERMODE	= $71
+RESERVED3		= $72
+
+
+BITTARGET		= $64
+CHROUT			= $FFD2
+BORDER			= $D020
+SCREEN			= $D021
+TEXT			= $0286
+NMI_LO			= $0318
+NMI_HI			= $0319
+; 204 bytes available in this location
+TAPEBUFFER		= $033C
+
+	*=$8000
+START	
+	.BYTE	$09, $80			; Cartridge cold-start vector = $8009
+	.BYTE	$25, $80			; Cartridge warm-start vector = $8025
+	.BYTE	$C3, $C2, $CD, $38, $30		; CBM8O - Autostart key
+	
+;	KERNAL RESET ROUTINE
+	STX $D016					; Turn on VIC for PAL / NTSC check
+	JSR $FDA3					; IOINIT - Init CIA chips
+	;JSR $FD50					; RANTAM - Clear/test system RAM
+	JSR ALTRANTAM				; Metallic's fast alternative to RANTAM
+	JSR $FD15					; RESTOR - Init KERNAL RAM vectors
+	JSR $FF5B					; CINT   - Init VIC and screen editor
+	CLI							; Re-enable IRQ interrupts	
+
+;	BASIC RESET  Routine
+
+	JSR $E453					; Init BASIC RAM vectors
+	JSR $E3BF					; Main BASIC RAM Init routine
+	JSR $E422					; Power-up message / NEW command
+	LDX #$FB
+	TXS							; Reduce stack pointer for BASIC
+	
+	LDA #$0B					;%00001011 ; Disable VIC display until the end of transfer
+	STA $D011
+	
+	LDA #00						; Change border colour to
+	STA BORDER					; Black
+	LDA #147					; PRINT CHR$(147) 
+	JSR CHROUT					; to clear Screen			
+	
+	LDY #$7f					; $7f = %01111111 
+	STY $dc0d					; Turn off CIAs Timer interrupts 
+	STY $dd0d					; Turn off CIAs Timer interrupts 
+	LDA $dc0d					; cancel all CIA-IRQs in queue/unprocessed 
+	LDA $dd0d					; cancel all CIA-IRQs in queue/unprocessed 
+	
+	
+; 	Change interrupt routines
+	ASL $D019
+	LDA #$00
+	STA $D01A
+	
+	LDA #$33
+	STA $01						; Make it all ram	
+		
+		
+; 	Place the metadata transfer routine into the nmi vector.
+	LDA #<STARTNMI
+	STA NMI_LO
+	LDA #>STARTNMI
+	STA NMI_HI		
+   	
+;	Foreground loop that waits the nmi handlers to do their job.   			
+	CLI	
+	LDY #$00	
+	CLV	
+	STY BITTARGET
+WAIT
+	BIT BITTARGET	
+	BVC WAIT
+;	Nmi handlers finished with the loading of the program.		
+	CLV	
+	
+	
+; Jump to the launcher. Menu sends this with the LAUNCHERNMI transfer routine
+	JMP TAPEBUFFER					
+
+
+;-------------------------------------------------------------------------------------	
+STARTNMI
+;-------------------------------------------------------------------------------------	
+; Only initial meta 4 bytes will be transferred with this routine
+; It will switch to the fast launcher transfer routine upon receiving the inital 4 bytes metadata.
+
+P1
+	LDA #$EA					; #$EA is a template variable
+	STA DATA_LOW,Y
+	INY
+	CPY #$0A
+	BNE OUT
+	LDA #<LAUNCHERNMI
+	STA NMI_LO					; Switch to actual Launcher NMI routine
+	LDY #$00	
+OUT	
+	RTI	
+;-------------------------------------------------------------------------------------	
+
+
+;-------------------------------------------------------------------------------------	
+LAUNCHERNMI							
+;-------------------------------------------------------------------------------------	
+; Routine to transfer launcher to tape buffer
+; Tape buffer is next to screen memory $0400... We'll pad the launcher binary with blank characters
+; Instead of checking the end condition with CPY we'll optimize and use just BNE.
+; 7 + 2 + 5 + 2 + 2 + 5 = 23 cycles for fast period + 7 cycle overhead from Kernal
+; This routine will switch to the fast NMI routine which loads the actual program.
+
+; Y is assumed to be initialized to zero upon entering into this routine
+; and will be reset to zero again upon leaving.
+P2
+	LDA #$EA						; #$EA is a template variable
+	STA TAPEBUFFER, Y
+	INY
+	BEQ OUTLAUNCHER
+	RTI
+OUTLAUNCHER
+; Switch between 1 / 4 / 8 byte transfer routine using micro supplied TRANSFERMODE value.
+; NMITAB is used to find the Nmi routine's low address byte
+	LDX TRANSFERMODE
+	LDA NMITAB, X
+	STA NMI_LO
+
+	LDX DATA_LENGTH	
+	RTI
+
+
+	
+NMI_X8	
+P3	
+	LDA #$EA					; #Actual value of $EA will be the currently switched bank number of cartridge
+	STA (ACTUAL_LOW), Y
+	INY	
+	
+P4	
+	LDA #$EA					; #Actual value of $EA will be the currently switched bank number of cartridge
+	STA (ACTUAL_LOW), Y
+	INY	
+
+P5	
+	LDA #$EA					; #Actual value of $EA will be the currently switched bank number of cartridge
+	STA (ACTUAL_LOW), Y
+	INY	
+	
+	
+P6	
+	LDA #$EA					; #Actual value of $EA will be the currently switched bank number of cartridge
+	STA (ACTUAL_LOW), Y
+	INY	
+	
+	
+;-------------------------------------------------------------------------------------
+NMI_X4	; Usual : 7 + 2 + 6 + 2 + 5 = 23 cycles per byte + 7 cycle overhead from Kernal
+;-------------------------------------------------------------------------------------	
+P7	
+	LDA #$EA					; #Actual value of $EA will be the currently switched bank number of cartridge	
+	STA (ACTUAL_LOW), Y
+	INY	
+
+P8
+	LDA #$EA					; #Actual value of $EA will be the currently switched bank number of cartridge	
+	STA (ACTUAL_LOW), Y
+	INY		
+	
+P9	
+	LDA #$EA					; #Actual value of $EA will be the currently switched bank number of cartridge	
+	STA (ACTUAL_LOW), Y
+	INY	
+
+	
+NMI_X1							; 1 byte transfer routine (part of 4 byte transfer routine optimization)	
+P10	
+	LDA #$EA					; #Actual value of $EA will be the currently switched bank number of cartridge
+	STA (ACTUAL_LOW), Y
+	INY		
+	
+	BEQ BLOCKEND	
+	RTI
+	
+BLOCKEND
+	INC ACTUAL_HIGH				; Next 256 bytes
+	DEX							; Decrement data length (set in STARTNMI)
+	BEQ OUTBLOCK				; If all pages  transferred exit foreground loop
+	RTI
+OUTBLOCK	
+	LDA #$64
+	STA BITTARGET				; BIT on $64 will set overflow flag. We can't use
+								; self modifying code since this code is in rom.
+	RTI		
+
+NMI_SOUND
+P11	
+	LDA #$EA					; #Actual value of $EA will be the currently switched bank number of cartridge
+	STA $D418				
+	RTI
+	
+	
+ALTRANTAM	
+	LDA #0						; $fd50 replacement starts here        
+	TAY
+LOOPTEST        
+	STA $0002,y
+	STA $0200,y        
+	STA $0300,y        
+	INY       
+	BNE LOOPTEST        
+	LDX #$3c        
+	LDY #3       
+	STX $b2        
+	STY $b3       
+	LDX #0        
+	LDY #$a0       
+	STX $0283					; highest ram address for Basic       
+	STY $0284             
+	STX $c1      
+	STY $c2      
+	LDA #8      
+	STA $0282        
+	LSR							;LDA #4        
+	STA $0288					; $fd50 replacement ends here
+	RTS
+	
+	
+NMITAB
+.BYTE	<NMI_X1,<NMI_X4,<NMI_X8
+	
+	*=$80FF
+P12
+	NOP							; #Actual value of $EA will be the currently switched bank number of cartridge
+; Performance summary 
+; 44kb file is 176 blocks (4 * STARTNMI is insignificant)
+; =~ 45056 NMI + 176 IRQ
+; 45056 * (20 + 5) + 176 * 30 = 1.126.400 + 1.280 = 1.131.680 which translates to 1.15 seconds on a pal machine.
+
+; !!!!!! IMPORTANT!!!!!!! 
+; Actual values of PLACEHOLDER1 and PLACEHOLDER2 should be looked up from build\64IRQTransferSoftNewForC64Fast.txt
+; and below line in CartridgeSuperFastNew.bat should be edited for the eprom bin file to be correctly built.
+;..\tools\CreateEpromLoader build\64IRQTransferSoftNewForC64Fast.65s.bin build\64IRQTransferSoftNewForC64FastLoader.bin 131 162
+PLACEHOLDER1 = (P1 + 1) - START
+PLACEHOLDER2 = (P2 + 1) - START
+PLACEHOLDER3 = (P3 + 1) - START
+PLACEHOLDER4 = (P4 + 1) - START
+PLACEHOLDER5 = (P5 + 1) - START
+PLACEHOLDER6 = (P6 + 1) - START
+PLACEHOLDER7 = (P7 + 1) - START
+PLACEHOLDER8 = (P8 + 1) - START
+PLACEHOLDER9 = (P9 + 1) - START
+PLACEHOLDER10 = (P10 + 1) - START
+PLACEHOLDER11 = (P11 + 1) - START
+PLACEHOLDER12 = P12- START

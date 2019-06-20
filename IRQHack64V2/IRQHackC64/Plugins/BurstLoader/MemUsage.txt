@@ -1,0 +1,23 @@
+Old
+$0400-$07E8 - Screen low
+$080E-$1eaf - Main executable
+$2000-$3FFF - Picture low
+$4000-$418F - Color buffer
+$4190-$42F2 - Additional code
+$4400-$47E8 - Screen high
+$6000-$7FFF - Picture high
+$8000-$9FFF - Cartridge rom
+$C000-$C19F - Transfer buffer
+$C1A0-$CEB6 - NMI handlers
+
+New
+$0400-$07E8 - Screen low
+$080E-$1eaf - Main executable   - .1dd6
+$2000-$3FFF - Picture low
+$4000-$418F - Color buffer
+$4190-$42F2 - Additional code
+$4400-$47E8 - Screen high
+$6000-$7FFF - Picture high
+$8000-$9FFF - Cartridge rom
+$C000-$C19F - Transfer buffer
+$C1A0-$CEB6 - NMI handlers

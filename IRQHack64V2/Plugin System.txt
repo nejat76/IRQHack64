@@ -1,0 +1,18 @@
+Menu should support a plugin system. 
+
+Things to do,
+
+1. Menu should be able to determine the file extension
+2. Soft details of how plugins are invoked and how selected file details are transferred to the invoked plugin is left to the menu system. 
+3. Individual menu software should keep track of the plugins it uses in the sd card file system.
+4. Plugin should be able to communicate with the cartridge to request the contents of the selected file.
+5. Cartridge should expose methods to the plugin to easily manipulate the file selected. Open / Seek / Read(N bytes) should be provided.
+6. Cartridge should expose methods for creating files and writing to these files. 
+
+
+
+
+
+
+
+	

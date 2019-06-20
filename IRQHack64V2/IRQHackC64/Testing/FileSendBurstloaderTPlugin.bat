@@ -1,0 +1,1 @@
+..\..\Tools\IRQHackSendNew W ..\build\plugins\burstloadert.prg COM10

@@ -1,0 +1,11 @@
+interrupt
+	-> timer functions
+	-> bit receive interrupt
+
+
+
+loop
+	-> handleApi()
+		
+	-> button check
+	-> serial stuff

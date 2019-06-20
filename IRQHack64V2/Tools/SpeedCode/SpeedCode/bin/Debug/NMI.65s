@@ -1,0 +1,1850 @@
+NMI_000  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $400	
+
+	LDA $80FF
+	STA $401		
+
+	LDA $80FF
+	STA $402	
+	
+	LDA $80FF
+	STA $403	
+
+	LDA $80FF
+	STA $404	
+
+	LDA $80FF
+	STA $405	
+
+	LDA $80FF
+	STA $406		
+	
+	LDA $80FF
+	STA $407		
+								
+	LDA #<NMI_001
+	STA NMI6502
+	LDA #>NMI_001
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_001  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $408	
+
+	LDA $80FF
+	STA $409		
+
+	LDA $80FF
+	STA $40a	
+	
+	LDA $80FF
+	STA $40b	
+
+	LDA $80FF
+	STA $40c	
+
+	LDA $80FF
+	STA $40d	
+
+	LDA $80FF
+	STA $40e		
+	
+	LDA $80FF
+	STA $40f		
+								
+	LDA #<NMI_002
+	STA NMI6502
+	LDA #>NMI_002
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_002  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $410	
+
+	LDA $80FF
+	STA $411		
+
+	LDA $80FF
+	STA $412	
+	
+	LDA $80FF
+	STA $413	
+
+	LDA $80FF
+	STA $414	
+
+	LDA $80FF
+	STA $415	
+
+	LDA $80FF
+	STA $416		
+	
+	LDA $80FF
+	STA $417		
+								
+	LDA #<NMI_003
+	STA NMI6502
+	LDA #>NMI_003
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_003  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $418	
+
+	LDA $80FF
+	STA $419		
+
+	LDA $80FF
+	STA $41a	
+	
+	LDA $80FF
+	STA $41b	
+
+	LDA $80FF
+	STA $41c	
+
+	LDA $80FF
+	STA $41d	
+
+	LDA $80FF
+	STA $41e		
+	
+	LDA $80FF
+	STA $41f		
+								
+	LDA #<NMI_004
+	STA NMI6502
+	LDA #>NMI_004
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_004  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $420	
+
+	LDA $80FF
+	STA $421		
+
+	LDA $80FF
+	STA $422	
+	
+	LDA $80FF
+	STA $423	
+
+	LDA $80FF
+	STA $424	
+
+	LDA $80FF
+	STA $425	
+
+	LDA $80FF
+	STA $426		
+	
+	LDA $80FF
+	STA $427		
+								
+	LDA #<NMI_005
+	STA NMI6502
+	LDA #>NMI_005
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_005  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $428	
+
+	LDA $80FF
+	STA $429		
+
+	LDA $80FF
+	STA $42a	
+	
+	LDA $80FF
+	STA $42b	
+
+	LDA $80FF
+	STA $42c	
+
+	LDA $80FF
+	STA $42d	
+
+	LDA $80FF
+	STA $42e		
+	
+	LDA $80FF
+	STA $42f		
+								
+	LDA #<NMI_006
+	STA NMI6502
+	LDA #>NMI_006
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_006  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $430	
+
+	LDA $80FF
+	STA $431		
+
+	LDA $80FF
+	STA $432	
+	
+	LDA $80FF
+	STA $433	
+
+	LDA $80FF
+	STA $434	
+
+	LDA $80FF
+	STA $435	
+
+	LDA $80FF
+	STA $436		
+	
+	LDA $80FF
+	STA $437		
+								
+	LDA #<NMI_007
+	STA NMI6502
+	LDA #>NMI_007
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_007  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $438	
+
+	LDA $80FF
+	STA $439		
+
+	LDA $80FF
+	STA $43a	
+	
+	LDA $80FF
+	STA $43b	
+
+	LDA $80FF
+	STA $43c	
+
+	LDA $80FF
+	STA $43d	
+
+	LDA $80FF
+	STA $43e		
+	
+	LDA $80FF
+	STA $43f		
+								
+	LDA #<NMI_008
+	STA NMI6502
+	LDA #>NMI_008
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_008  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $440	
+
+	LDA $80FF
+	STA $441		
+
+	LDA $80FF
+	STA $442	
+	
+	LDA $80FF
+	STA $443	
+
+	LDA $80FF
+	STA $444	
+
+	LDA $80FF
+	STA $445	
+
+	LDA $80FF
+	STA $446		
+	
+	LDA $80FF
+	STA $447		
+								
+	LDA #<NMI_009
+	STA NMI6502
+	LDA #>NMI_009
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_009  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $448	
+
+	LDA $80FF
+	STA $449		
+
+	LDA $80FF
+	STA $44a	
+	
+	LDA $80FF
+	STA $44b	
+
+	LDA $80FF
+	STA $44c	
+
+	LDA $80FF
+	STA $44d	
+
+	LDA $80FF
+	STA $44e		
+	
+	LDA $80FF
+	STA $44f		
+								
+	LDA #<NMI_010
+	STA NMI6502
+	LDA #>NMI_010
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_010  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $450	
+
+	LDA $80FF
+	STA $451		
+
+	LDA $80FF
+	STA $452	
+	
+	LDA $80FF
+	STA $453	
+
+	LDA $80FF
+	STA $454	
+
+	LDA $80FF
+	STA $455	
+
+	LDA $80FF
+	STA $456		
+	
+	LDA $80FF
+	STA $457		
+								
+	LDA #<NMI_011
+	STA NMI6502
+	LDA #>NMI_011
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_011  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $458	
+
+	LDA $80FF
+	STA $459		
+
+	LDA $80FF
+	STA $45a	
+	
+	LDA $80FF
+	STA $45b	
+
+	LDA $80FF
+	STA $45c	
+
+	LDA $80FF
+	STA $45d	
+
+	LDA $80FF
+	STA $45e		
+	
+	LDA $80FF
+	STA $45f		
+								
+	LDA #<NMI_012
+	STA NMI6502
+	LDA #>NMI_012
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_012  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $460	
+
+	LDA $80FF
+	STA $461		
+
+	LDA $80FF
+	STA $462	
+	
+	LDA $80FF
+	STA $463	
+
+	LDA $80FF
+	STA $464	
+
+	LDA $80FF
+	STA $465	
+
+	LDA $80FF
+	STA $466		
+	
+	LDA $80FF
+	STA $467		
+								
+	LDA #<NMI_013
+	STA NMI6502
+	LDA #>NMI_013
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_013  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $468	
+
+	LDA $80FF
+	STA $469		
+
+	LDA $80FF
+	STA $46a	
+	
+	LDA $80FF
+	STA $46b	
+
+	LDA $80FF
+	STA $46c	
+
+	LDA $80FF
+	STA $46d	
+
+	LDA $80FF
+	STA $46e		
+	
+	LDA $80FF
+	STA $46f		
+								
+	LDA #<NMI_014
+	STA NMI6502
+	LDA #>NMI_014
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_014  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $470	
+
+	LDA $80FF
+	STA $471		
+
+	LDA $80FF
+	STA $472	
+	
+	LDA $80FF
+	STA $473	
+
+	LDA $80FF
+	STA $474	
+
+	LDA $80FF
+	STA $475	
+
+	LDA $80FF
+	STA $476		
+	
+	LDA $80FF
+	STA $477		
+								
+	LDA #<NMI_015
+	STA NMI6502
+	LDA #>NMI_015
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_015  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $478	
+
+	LDA $80FF
+	STA $479		
+
+	LDA $80FF
+	STA $47a	
+	
+	LDA $80FF
+	STA $47b	
+
+	LDA $80FF
+	STA $47c	
+
+	LDA $80FF
+	STA $47d	
+
+	LDA $80FF
+	STA $47e		
+	
+	LDA $80FF
+	STA $47f		
+								
+	LDA #<NMI_016
+	STA NMI6502
+	LDA #>NMI_016
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_016  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $480	
+
+	LDA $80FF
+	STA $481		
+
+	LDA $80FF
+	STA $482	
+	
+	LDA $80FF
+	STA $483	
+
+	LDA $80FF
+	STA $484	
+
+	LDA $80FF
+	STA $485	
+
+	LDA $80FF
+	STA $486		
+	
+	LDA $80FF
+	STA $487		
+								
+	LDA #<NMI_017
+	STA NMI6502
+	LDA #>NMI_017
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_017  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $488	
+
+	LDA $80FF
+	STA $489		
+
+	LDA $80FF
+	STA $48a	
+	
+	LDA $80FF
+	STA $48b	
+
+	LDA $80FF
+	STA $48c	
+
+	LDA $80FF
+	STA $48d	
+
+	LDA $80FF
+	STA $48e		
+	
+	LDA $80FF
+	STA $48f		
+								
+	LDA #<NMI_018
+	STA NMI6502
+	LDA #>NMI_018
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_018  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $490	
+
+	LDA $80FF
+	STA $491		
+
+	LDA $80FF
+	STA $492	
+	
+	LDA $80FF
+	STA $493	
+
+	LDA $80FF
+	STA $494	
+
+	LDA $80FF
+	STA $495	
+
+	LDA $80FF
+	STA $496		
+	
+	LDA $80FF
+	STA $497		
+								
+	LDA #<NMI_019
+	STA NMI6502
+	LDA #>NMI_019
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_019  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $498	
+
+	LDA $80FF
+	STA $499		
+
+	LDA $80FF
+	STA $49a	
+	
+	LDA $80FF
+	STA $49b	
+
+	LDA $80FF
+	STA $49c	
+
+	LDA $80FF
+	STA $49d	
+
+	LDA $80FF
+	STA $49e		
+	
+	LDA $80FF
+	STA $49f		
+								
+	LDA #<NMI_020
+	STA NMI6502
+	LDA #>NMI_020
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_020  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $4a0	
+
+	LDA $80FF
+	STA $4a1		
+
+	LDA $80FF
+	STA $4a2	
+	
+	LDA $80FF
+	STA $4a3	
+
+	LDA $80FF
+	STA $4a4	
+
+	LDA $80FF
+	STA $4a5	
+
+	LDA $80FF
+	STA $4a6		
+	
+	LDA $80FF
+	STA $4a7		
+								
+	LDA #<NMI_021
+	STA NMI6502
+	LDA #>NMI_021
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_021  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $4a8	
+
+	LDA $80FF
+	STA $4a9		
+
+	LDA $80FF
+	STA $4aa	
+	
+	LDA $80FF
+	STA $4ab	
+
+	LDA $80FF
+	STA $4ac	
+
+	LDA $80FF
+	STA $4ad	
+
+	LDA $80FF
+	STA $4ae		
+	
+	LDA $80FF
+	STA $4af		
+								
+	LDA #<NMI_022
+	STA NMI6502
+	LDA #>NMI_022
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_022  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $4b0	
+
+	LDA $80FF
+	STA $4b1		
+
+	LDA $80FF
+	STA $4b2	
+	
+	LDA $80FF
+	STA $4b3	
+
+	LDA $80FF
+	STA $4b4	
+
+	LDA $80FF
+	STA $4b5	
+
+	LDA $80FF
+	STA $4b6		
+	
+	LDA $80FF
+	STA $4b7		
+								
+	LDA #<NMI_023
+	STA NMI6502
+	LDA #>NMI_023
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_023  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $4b8	
+
+	LDA $80FF
+	STA $4b9		
+
+	LDA $80FF
+	STA $4ba	
+	
+	LDA $80FF
+	STA $4bb	
+
+	LDA $80FF
+	STA $4bc	
+
+	LDA $80FF
+	STA $4bd	
+
+	LDA $80FF
+	STA $4be		
+	
+	LDA $80FF
+	STA $4bf		
+								
+	LDA #<NMI_024
+	STA NMI6502
+	LDA #>NMI_024
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_024  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $4c0	
+
+	LDA $80FF
+	STA $4c1		
+
+	LDA $80FF
+	STA $4c2	
+	
+	LDA $80FF
+	STA $4c3	
+
+	LDA $80FF
+	STA $4c4	
+
+	LDA $80FF
+	STA $4c5	
+
+	LDA $80FF
+	STA $4c6		
+	
+	LDA $80FF
+	STA $4c7		
+								
+	LDA #<NMI_025
+	STA NMI6502
+	LDA #>NMI_025
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_025  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $4c8	
+
+	LDA $80FF
+	STA $4c9		
+
+	LDA $80FF
+	STA $4ca	
+	
+	LDA $80FF
+	STA $4cb	
+
+	LDA $80FF
+	STA $4cc	
+
+	LDA $80FF
+	STA $4cd	
+
+	LDA $80FF
+	STA $4ce		
+	
+	LDA $80FF
+	STA $4cf		
+								
+	LDA #<NMI_026
+	STA NMI6502
+	LDA #>NMI_026
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_026  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $4d0	
+
+	LDA $80FF
+	STA $4d1		
+
+	LDA $80FF
+	STA $4d2	
+	
+	LDA $80FF
+	STA $4d3	
+
+	LDA $80FF
+	STA $4d4	
+
+	LDA $80FF
+	STA $4d5	
+
+	LDA $80FF
+	STA $4d6		
+	
+	LDA $80FF
+	STA $4d7		
+								
+	LDA #<NMI_027
+	STA NMI6502
+	LDA #>NMI_027
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_027  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $4d8	
+
+	LDA $80FF
+	STA $4d9		
+
+	LDA $80FF
+	STA $4da	
+	
+	LDA $80FF
+	STA $4db	
+
+	LDA $80FF
+	STA $4dc	
+
+	LDA $80FF
+	STA $4dd	
+
+	LDA $80FF
+	STA $4de		
+	
+	LDA $80FF
+	STA $4df		
+								
+	LDA #<NMI_028
+	STA NMI6502
+	LDA #>NMI_028
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_028  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $4e0	
+
+	LDA $80FF
+	STA $4e1		
+
+	LDA $80FF
+	STA $4e2	
+	
+	LDA $80FF
+	STA $4e3	
+
+	LDA $80FF
+	STA $4e4	
+
+	LDA $80FF
+	STA $4e5	
+
+	LDA $80FF
+	STA $4e6		
+	
+	LDA $80FF
+	STA $4e7		
+								
+	LDA #<NMI_029
+	STA NMI6502
+	LDA #>NMI_029
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_029  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $4e8	
+
+	LDA $80FF
+	STA $4e9		
+
+	LDA $80FF
+	STA $4ea	
+	
+	LDA $80FF
+	STA $4eb	
+
+	LDA $80FF
+	STA $4ec	
+
+	LDA $80FF
+	STA $4ed	
+
+	LDA $80FF
+	STA $4ee		
+	
+	LDA $80FF
+	STA $4ef		
+								
+	LDA #<NMI_030
+	STA NMI6502
+	LDA #>NMI_030
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_030  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $4f0	
+
+	LDA $80FF
+	STA $4f1		
+
+	LDA $80FF
+	STA $4f2	
+	
+	LDA $80FF
+	STA $4f3	
+
+	LDA $80FF
+	STA $4f4	
+
+	LDA $80FF
+	STA $4f5	
+
+	LDA $80FF
+	STA $4f6		
+	
+	LDA $80FF
+	STA $4f7		
+								
+	LDA #<NMI_031
+	STA NMI6502
+	LDA #>NMI_031
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_031  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $4f8	
+
+	LDA $80FF
+	STA $4f9		
+
+	LDA $80FF
+	STA $4fa	
+	
+	LDA $80FF
+	STA $4fb	
+
+	LDA $80FF
+	STA $4fc	
+
+	LDA $80FF
+	STA $4fd	
+
+	LDA $80FF
+	STA $4fe		
+	
+	LDA $80FF
+	STA $4ff		
+								
+	LDA #<NMI_032
+	STA NMI6502
+	LDA #>NMI_032
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_032  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $500	
+
+	LDA $80FF
+	STA $501		
+
+	LDA $80FF
+	STA $502	
+	
+	LDA $80FF
+	STA $503	
+
+	LDA $80FF
+	STA $504	
+
+	LDA $80FF
+	STA $505	
+
+	LDA $80FF
+	STA $506		
+	
+	LDA $80FF
+	STA $507		
+								
+	LDA #<NMI_033
+	STA NMI6502
+	LDA #>NMI_033
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_033  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $508	
+
+	LDA $80FF
+	STA $509		
+
+	LDA $80FF
+	STA $50a	
+	
+	LDA $80FF
+	STA $50b	
+
+	LDA $80FF
+	STA $50c	
+
+	LDA $80FF
+	STA $50d	
+
+	LDA $80FF
+	STA $50e		
+	
+	LDA $80FF
+	STA $50f		
+								
+	LDA #<NMI_034
+	STA NMI6502
+	LDA #>NMI_034
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_034  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $510	
+
+	LDA $80FF
+	STA $511		
+
+	LDA $80FF
+	STA $512	
+	
+	LDA $80FF
+	STA $513	
+
+	LDA $80FF
+	STA $514	
+
+	LDA $80FF
+	STA $515	
+
+	LDA $80FF
+	STA $516		
+	
+	LDA $80FF
+	STA $517		
+								
+	LDA #<NMI_035
+	STA NMI6502
+	LDA #>NMI_035
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_035  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $518	
+
+	LDA $80FF
+	STA $519		
+
+	LDA $80FF
+	STA $51a	
+	
+	LDA $80FF
+	STA $51b	
+
+	LDA $80FF
+	STA $51c	
+
+	LDA $80FF
+	STA $51d	
+
+	LDA $80FF
+	STA $51e		
+	
+	LDA $80FF
+	STA $51f		
+								
+	LDA #<NMI_036
+	STA NMI6502
+	LDA #>NMI_036
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_036  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $520	
+
+	LDA $80FF
+	STA $521		
+
+	LDA $80FF
+	STA $522	
+	
+	LDA $80FF
+	STA $523	
+
+	LDA $80FF
+	STA $524	
+
+	LDA $80FF
+	STA $525	
+
+	LDA $80FF
+	STA $526		
+	
+	LDA $80FF
+	STA $527		
+								
+	LDA #<NMI_037
+	STA NMI6502
+	LDA #>NMI_037
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_037  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $528	
+
+	LDA $80FF
+	STA $529		
+
+	LDA $80FF
+	STA $52a	
+	
+	LDA $80FF
+	STA $52b	
+
+	LDA $80FF
+	STA $52c	
+
+	LDA $80FF
+	STA $52d	
+
+	LDA $80FF
+	STA $52e		
+	
+	LDA $80FF
+	STA $52f		
+								
+	LDA #<NMI_038
+	STA NMI6502
+	LDA #>NMI_038
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_038  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $530	
+
+	LDA $80FF
+	STA $531		
+
+	LDA $80FF
+	STA $532	
+	
+	LDA $80FF
+	STA $533	
+
+	LDA $80FF
+	STA $534	
+
+	LDA $80FF
+	STA $535	
+
+	LDA $80FF
+	STA $536		
+	
+	LDA $80FF
+	STA $537		
+								
+	LDA #<NMI_039
+	STA NMI6502
+	LDA #>NMI_039
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_039  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $538	
+
+	LDA $80FF
+	STA $539		
+
+	LDA $80FF
+	STA $53a	
+	
+	LDA $80FF
+	STA $53b	
+
+	LDA $80FF
+	STA $53c	
+
+	LDA $80FF
+	STA $53d	
+
+	LDA $80FF
+	STA $53e		
+	
+	LDA $80FF
+	STA $53f		
+								
+	LDA #<NMI_040
+	STA NMI6502
+	LDA #>NMI_040
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_040  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $540	
+
+	LDA $80FF
+	STA $541		
+
+	LDA $80FF
+	STA $542	
+	
+	LDA $80FF
+	STA $543	
+
+	LDA $80FF
+	STA $544	
+
+	LDA $80FF
+	STA $545	
+
+	LDA $80FF
+	STA $546		
+	
+	LDA $80FF
+	STA $547		
+								
+	LDA #<NMI_041
+	STA NMI6502
+	LDA #>NMI_041
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_041  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $548	
+
+	LDA $80FF
+	STA $549		
+
+	LDA $80FF
+	STA $54a	
+	
+	LDA $80FF
+	STA $54b	
+
+	LDA $80FF
+	STA $54c	
+
+	LDA $80FF
+	STA $54d	
+
+	LDA $80FF
+	STA $54e		
+	
+	LDA $80FF
+	STA $54f		
+								
+	LDA #<NMI_042
+	STA NMI6502
+	LDA #>NMI_042
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_042  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $550	
+
+	LDA $80FF
+	STA $551		
+
+	LDA $80FF
+	STA $552	
+	
+	LDA $80FF
+	STA $553	
+
+	LDA $80FF
+	STA $554	
+
+	LDA $80FF
+	STA $555	
+
+	LDA $80FF
+	STA $556		
+	
+	LDA $80FF
+	STA $557		
+								
+	LDA #<NMI_043
+	STA NMI6502
+	LDA #>NMI_043
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_043  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $558	
+
+	LDA $80FF
+	STA $559		
+
+	LDA $80FF
+	STA $55a	
+	
+	LDA $80FF
+	STA $55b	
+
+	LDA $80FF
+	STA $55c	
+
+	LDA $80FF
+	STA $55d	
+
+	LDA $80FF
+	STA $55e		
+	
+	LDA $80FF
+	STA $55f		
+								
+	LDA #<NMI_044
+	STA NMI6502
+	LDA #>NMI_044
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_044  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $560	
+
+	LDA $80FF
+	STA $561		
+
+	LDA $80FF
+	STA $562	
+	
+	LDA $80FF
+	STA $563	
+
+	LDA $80FF
+	STA $564	
+
+	LDA $80FF
+	STA $565	
+
+	LDA $80FF
+	STA $566		
+	
+	LDA $80FF
+	STA $567		
+								
+	LDA #<NMI_045
+	STA NMI6502
+	LDA #>NMI_045
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_045  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $568	
+
+	LDA $80FF
+	STA $569		
+
+	LDA $80FF
+	STA $56a	
+	
+	LDA $80FF
+	STA $56b	
+
+	LDA $80FF
+	STA $56c	
+
+	LDA $80FF
+	STA $56d	
+
+	LDA $80FF
+	STA $56e		
+	
+	LDA $80FF
+	STA $56f		
+								
+	LDA #<NMI_046
+	STA NMI6502
+	LDA #>NMI_046
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_046  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $570	
+
+	LDA $80FF
+	STA $571		
+
+	LDA $80FF
+	STA $572	
+	
+	LDA $80FF
+	STA $573	
+
+	LDA $80FF
+	STA $574	
+
+	LDA $80FF
+	STA $575	
+
+	LDA $80FF
+	STA $576		
+	
+	LDA $80FF
+	STA $577		
+								
+	LDA #<NMI_047
+	STA NMI6502
+	LDA #>NMI_047
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_047  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $578	
+
+	LDA $80FF
+	STA $579		
+
+	LDA $80FF
+	STA $57a	
+	
+	LDA $80FF
+	STA $57b	
+
+	LDA $80FF
+	STA $57c	
+
+	LDA $80FF
+	STA $57d	
+
+	LDA $80FF
+	STA $57e		
+	
+	LDA $80FF
+	STA $57f		
+								
+	LDA #<NMI_048
+	STA NMI6502
+	LDA #>NMI_048
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_048  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $580	
+
+	LDA $80FF
+	STA $581		
+
+	LDA $80FF
+	STA $582	
+	
+	LDA $80FF
+	STA $583	
+
+	LDA $80FF
+	STA $584	
+
+	LDA $80FF
+	STA $585	
+
+	LDA $80FF
+	STA $586		
+	
+	LDA $80FF
+	STA $587		
+								
+	LDA #<NMI_049
+	STA NMI6502
+	LDA #>NMI_049
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
+NMI_049  
+	LDA #$37			
+	STA $01				
+	
+	LDA $80FF
+	STA $588	
+
+	LDA $80FF
+	STA $589		
+
+	LDA $80FF
+	STA $58a	
+	
+	LDA $80FF
+	STA $58b	
+
+	LDA $80FF
+	STA $58c	
+
+	LDA $80FF
+	STA $58d	
+
+	LDA $80FF
+	STA $58e		
+	
+	LDA $80FF
+	STA $58f		
+								
+	LDA #<NMI_000
+	STA NMI6502
+	LDA #>NMI_000
+	STA NMI6502 + 1
+	
+	LDA #$35
+	STA $01
+	RTI	
+
